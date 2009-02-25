@@ -1,0 +1,151 @@
+div#factolex-term-preview {
+	position: absolute;
+	overflow: auto;
+	color: #777;
+	background-color: white;
+	padding: 10px;
+	border: 7px solid #ddd;
+}
+div#factolex-term-preview p.explanation {
+	color: #000;
+	background-color: white;
+	padding: 6px;
+	border: 1px dotted #ccc;
+}
+div#factolex-choose-term {
+	position: absolute;
+	background-color: #ccc;
+	border: 1px solid #bbb;
+	width: 80%;
+	max-height: 150px;
+	overflow: auto;
+	left: 6px;
+	margin-top: 5px;
+	display: none;
+}
+div#factolex-choose-term div {
+	margin-top: 1px;
+	padding: 6px;
+	background-color: #f2f2fd;
+	color: black;
+	cursor: pointer;
+}
+div#factolex-choose-term div.first {
+	margin-top: 0;
+}
+div#factolex-choose-term div .tags {
+	float: right;
+	font-size: 90%;
+}
+div#factolex-choose-term div .add {
+	text-decoration: underline;
+}
+div#factolex-choose-term div .fact {
+	font-size: 90%;
+	color: #666;
+}
+div#factolex-choose-term div:hover {
+	background-color: #e4f2fd;
+	color: #d54e21;
+}
+
+ul#factolex-terms-in-glossary {
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+ul#factolex-terms-in-glossary li a.term {
+	color: black;
+	text-decoration: none;
+	font-weight: bold;
+}
+ul#factolex-terms-in-glossary li a.remove {
+	font-size: 85%;
+	color: red;
+}
+ul#factolex-terms-in-glossary li .fact {
+	font-size: 80%;
+	color: #999;
+}
+
+span.factolex-term {
+	color: black;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.factolex-glossary {
+	background-attachment: scroll;
+	background-image: none;
+	background-repeat: repeat;
+	background-color: white;
+	color: #333;
+	display: block;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	line-height: 16px;
+	margin: 10px 0 10px 0;
+	padding: 0;
+	text-align: left;
+	border: 1px solid #9FC2E1;
+}
+.factolex-glossary .factolex-glossary-header {
+	padding: 5px 10px 5px 10px;
+	font-weight: bold;
+	background-color: #BCD0E8;
+	border-bottom: 1px solid #9FC2E1;
+	color: #002FA5;
+}
+.factolex-glossary .factolex-glossary-header a, .factolex-glossary .factolex-glossary-header a:link, .factolex-glossary .factolex-glossary-header a:visited {
+	color: #002FA5;
+	display: block;
+	text-decoration: none;
+}
+.factolex-glossary .factolex-glossary-header a:hover {
+	color: #000;
+	text-decoration: underline;
+}
+.factolex-glossary .factolex-glossary-content {
+	overflow: auto;
+	padding: 5px 10px 10px 10px;
+}
+.factolex-glossary .factolex-glossary-content a, .factolex-glossary .factolex-glossary-content a:link, .factolex-glossary .factolex-glossary-content a:visited {
+	color: #333;
+}
+.factolex-glossary .factolex-glossary-content a:hover {
+	color: #333;
+	text-decoration: underline;
+}
+
+.factolex-glossary .factolex-glossary-content h2, .factolex-glossary .factolex-glossary-content a {
+	display: block;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 13px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: bold;
+	line-height: normal;
+	margin: 10px 0 3px 0;
+	padding: 0;
+	text-decoration: none;
+}
+.factolex-glossary .factolex-glossary-content ul {
+	list-style-type: disc;
+	margin: 0;
+	margin-left: 10px;
+	padding: 0;
+	padding-left: 10px;
+}
+
+.factolex-glossary .factolex-glossary-content li {
+	margin: 0;
+	margin-bottom: 2px;
+	padding: 0;
+	padding-left: 10px;
+}
+
+.factolex-glossary .factolex-glossary-content li:before {
+	content: "";
+}

@@ -1,0 +1,238 @@
+# Factolex Glossary
+# Copyright (C) 2009 Alexander Kirk
+# This file is distributed under the same license as the Factolex Glossary package.
+# Alexander Kirk <alex@factolex.com>, 2009.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Factolex Glossary  (0.1)\n"
+"Report-Msgid-Bugs-To: http://www.factolex.com/support/feedback.php\n"
+"POT-Creation-Date: 2009-02-25 23:35+0100\n"
+"PO-Revision-Date: 2009-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: factolex-glossary.php:92
+msgid "Glossary powered by Factolex.com"
+msgstr "Glossar mit Unterstützung von Factolex.com"
+
+#: factolex-glossary.php:137 factolex-glossary.php:140
+msgid "No terms have been selected for this glossary."
+msgstr "Für dieses Glossar wurden noch keine Begriffe ausgewählt."
+
+#: factolex-glossary.php:325 factolex-glossary.php:346
+#: factolex-glossary.php:333 factolex-glossary.php:354
+msgid "Factolex Glossary Settings"
+msgstr "Factolex Glossar Einstellungen"
+
+#: factolex-glossary.php:325 factolex-glossary.php:333
+msgid "Factolex Glossary"
+msgstr "Factolex Glossar"
+
+#: factolex-glossary.php:350 factolex-glossary.php:358
+msgid "User data"
+msgstr "Benutzerdaten"
+
+#: factolex-glossary.php:351 factolex-glossary.php:359
+#, php-format
+msgid ""
+"If you have registered at <a href=%factolex>Factolex.com</a>, you will be "
+"able change and add multiple facts as explanations."
+msgstr ""
+"Wenn Sie sich auf <a href=%factolex>Factolex.com</a> registriert haben, "
+"können Sie Fakten ändern sowie mehrere Fakten als Erklärungen verwenden."
+
+#: factolex-glossary.php:352 factolex-glossary.php:360
+msgid ""
+"You don't have to specify an account: leave the field blank if you want to "
+"try it first, or are satisfied with the results as they are right now."
+msgstr ""
+"Sie müssen keinen Account eintragen: Lassen Sie das Feld leer, wenn Sie "
+"das Plugin zuerst einmal ausprobieren wollen, oder Sie mit den bisherigen "
+"Ergebnissen zufrieden sind."
+
+#: factolex-glossary.php:355 factolex-glossary.php:363
+msgid "Factolex Username"
+msgstr "Factolex Username"
+
+#: factolex-glossary.php:359 factolex-glossary.php:367
+msgid "Language"
+msgstr "Sprache"
+
+#: factolex-glossary.php:361 factolex-glossary.php:369
+msgid "English"
+msgstr "Englisch"
+
+#: factolex-glossary.php:362 factolex-glossary.php:370
+msgid "German"
+msgstr "Deutsch"
+
+#: factolex-glossary.php:366 factolex-glossary.php:374
+msgid "Hide the glossary"
+msgstr "Glossar verstecken"
+
+#: factolex-glossary.php:367 factolex-glossary.php:375
+msgid ""
+"only show the plugin output to logged in users <i>(good for testing the "
+"plugin without having everyone see it)"
+msgstr ""
+"Die Ausgabe des Plugins nur eingeloggten Usern zeigen <i>(nützlich, "
+"während sie mit dem Plugin experimentieren)"
+
+#: factolex-glossary.php:371 factolex-glossary.php:410
+#: factolex-glossary.php:424 factolex-glossary.php:379
+#: factolex-glossary.php:418 factolex-glossary.php:432
+msgid "Save Changes"
+msgstr "Änderungen speichern"
+
+#: factolex-glossary.php:373 factolex-glossary.php:381
+msgid "Layout settings"
+msgstr "Layout Einstellungen"
+
+#: factolex-glossary.php:374 factolex-glossary.php:382
+msgid "Here you can change the visual appearance of the glossary on your page."
+msgstr "Hier können Sie das Aussehen des Glossars auf Ihrer Seite verändern."
+
+#: factolex-glossary.php:377 factolex-glossary.php:385
+msgid "Border Color"
+msgstr "Rahmenfarbe"
+
+#: factolex-glossary.php:378 factolex-glossary.php:382
+#: factolex-glossary.php:386 factolex-glossary.php:390
+#: factolex-glossary.php:394 factolex-glossary.php:398
+#: factolex-glossary.php:402 factolex-glossary.php:406
+msgid "Format: <a href=%w3>CSS Colors</a>, default: %default"
+msgstr "Format: <a href=%w3>CSS Farben</a>, Standardeinstellung: %default"
+
+#: factolex-glossary.php:381 factolex-glossary.php:389
+msgid "Header Background Color"
+msgstr "Titel Hintergrundfarbe"
+
+#: factolex-glossary.php:385 factolex-glossary.php:393
+msgid "Header Font Color"
+msgstr "Titel Schriftfarbe"
+
+#: factolex-glossary.php:389 factolex-glossary.php:397
+msgid "Main Background Color"
+msgstr "Hintergrundfarbe"
+
+#: factolex-glossary.php:393 factolex-glossary.php:401
+msgid "Main Font Color"
+msgstr "Schriftfarbe"
+
+#: factolex-glossary.php:397 factolex-glossary.php:405
+msgid "Link Color"
+msgstr "Linkfarbe"
+
+#: factolex-glossary.php:401 factolex-glossary.php:409
+msgid "Width"
+msgstr "Breite"
+
+#: factolex-glossary.php:402 factolex-glossary.php:406
+#: factolex-glossary.php:410 factolex-glossary.php:414
+msgid "Format: <a href=%w3>CSS Dimensions</a>, default: %default"
+msgstr "Format: <a href=%w3>CSS Dimensionen</a>, Standardeinstellung: %default"
+
+#: factolex-glossary.php:405 factolex-glossary.php:413
+msgid "Height"
+msgstr "Höhe"
+
+#: factolex-glossary.php:413 factolex-glossary.php:421
+msgid "Deactivation"
+msgstr "Deaktivierung"
+
+#: factolex-glossary.php:414 factolex-glossary.php:422
+msgid ""
+"Use this checkbox if you want to start over with the Factolex Glossary. "
+"Activate the checkbox, click Save and then deactivate and re-activate the "
+"plugin."
+msgstr ""
+"Verwenden Sie dieses Checkbox, wenn Sie mit dem Factolex Glossar neu "
+"anfangen wollen. Aktivieren Sie die Checkbox, klicken Sie auf Speichern und "
+"deaktivieren und re-aktivieren Sie dann das Plugin."
+
+#: factolex-glossary.php:415 factolex-glossary.php:423
+msgid ""
+"<strong>Note:</strong> This will delete all the settings for this plugin and "
+"your term selections for your blog posts."
+msgstr ""
+"<strong>Hinweis:</strong> Dies löscht alle Einstellungen für dieses Plugin "
+"und Ihre Auswahl an Begriffen für die Blog Artikel."
+
+#: factolex-glossary.php:418 factolex-glossary.php:426
+msgid "Delete data upon deactivation"
+msgstr "Daten bei Deaktivierung löschen"
+
+#: factolex-glossary.php:443 factolex-glossary.php:451
+msgid "Loading terms..."
+msgstr "Lade Begriffe..."
+
+#: factolex-glossary.php:444 factolex-glossary.php:452
+msgid ""
+"Either an error occurred when loading the terms from the Factolex API, or "
+"your text did not contain any terms available at Factolex.com. Please <a "
+"href=%tryagain>try again</a> or <a href=%close>close this</a>."
+msgstr ""
+"Entweder ist ein Fehler beim Laden der Begriffe von der Factolex API "
+"aufgetreten, oder Ihr Text enthielt keine auf Factolex.com vorhandenen "
+"Begriffe. Bitte <a href=%tryagain>versuchen Sie es erneut</a> oder <a "
+"href=%close>schließen sie diese Ansicht</a>."
+
+#: factolex-glossary.php:445 factolex-glossary.php:453
+#, php-format
+msgid ""
+"Click the terms that you want to enlist in your glossary and select the "
+"meaning by clicking on it. The term will appear in the box on the right. <a "
+"href=%close>Close this</a> when you are finished."
+msgstr ""
+"Klicken Sie auf die Begriffe, die Sie in Ihr Glossar aufnehmen wollen und "
+"wählen Sie die Bedeutung, indem Sie darauf klicken. Der Begriff wird in den "
+"Kasten auf der rechten Seite eingetragen. <a href=%close>schließen sie "
+"diese Ansicht</a>, wenn Sie fertig sind."
+
+#: factolex-glossary.php:446 factolex-glossary.php:454
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: factolex-glossary.php:447 factolex-glossary.php:455
+msgid "Tags:"
+msgstr "Tags:"
+
+#: factolex-glossary.php:495 factolex-glossary.php:505
+msgid ""
+"Insert <tt>[factolex]</tt> where the glossary should appear in your post."
+msgstr ""
+"Fügen Sie <tt>[factolex]</tt> an der Stelle in den Artikel ein, an der das "
+"Glossar erscheinen soll."
+
+#: factolex-glossary.php:503 factolex-glossary.php:513
+msgid "Remove"
+msgstr "Entfernen"
+
+#: factolex-glossary.php:507 factolex-glossary.php:517
+msgid "<a>Check for terms</a> at Factolex.com"
+msgstr "Auf Factolex.com <a>nach Begriffen suchen</a>"
+
+#: factolex-glossary.php:508 factolex-glossary.php:518
+msgid ""
+"<strong>Note:</strong> This will send the text to Factolex.com in order to "
+"analyze it."
+msgstr ""
+"<strong>Hinweis:</strong> Dies sendet den Text an Factolex.com, um ihn zu "
+"analysieren."
+
+#: factolex-glossary.php:512 factolex-glossary.php:522
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: factolex-glossary.php:456
+msgid "alternate spelling"
+msgstr "andere Schreibweise"
+
+#: factolex-glossary.php:457
+msgid "main term spelling"
+msgstr "Original-Schreibweise"

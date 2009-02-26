@@ -91,36 +91,50 @@ jQuery(document).ready( function($) {
 					var term, terms = factolex_terms[word];
 					choose_div.html("");
 					
+					var d, titles, additional_text;
 					for (var i = 0, l = terms.length; i < l; i++) {
 						term = terms[i];
 						factolex_terms[term.id] = term;
-						var d = $(document.createElement("div"))
-							.html(term.title + " <span class=\"tags\">" + factolexL10N.tags + " <i>" + term.tags + "</i></span> <span class=\"add\">" + factolexL10N.add + "</span><br/><span class=\"fact\">" + term.fact + "</span>")
-							.attr("factolexid", term.id)
-							.appendTo(choose_div)
-							.click(function() {
-								var term = factolex_terms[$(this).attr("factolexid")];
-								if (factolex_lexicon[term.id]) {
-									// alert("already in your lexicon");
-									return true;
-								}
-								
-								$.ajax({
-									data: "action=factolex-add-term&term=" + term.id + "&post=" + $("#post_ID").val() + "&title=" + encodeURIComponent(term.title) + "&tags=" + encodeURIComponent(term.tags) + "&link=" + encodeURIComponent(term.link) + "&fact_id=" + encodeURIComponent(term.fact_id) + "&fact_title=" + encodeURIComponent(term.fact) + "&fact_type=" + encodeURIComponent(term.fact_type) + "&fact_source=" + encodeURIComponent(term.fact_source),
-									type: "POST",
-									url: "admin-ajax.php?action=factolex-add-term"
+						titles = [term.title];
+						additional_text = [""];
+						if (word != term.title) {
+							titles.push(word);
+							additional_text.push(" (" + factolexL10N.alternateSpelling + ")");
+						}
+						if (term.synonym_for) {
+							titles.push(term.synonym_for);
+							additional_text.push(" (" + factolexL10N.originalSpelling + ")");
+						}
+						for (var j = 0; j < titles.length; j++) {
+							d = $(document.createElement("div"))
+								.html(titles[j] + " <span class=\"tags\">" + factolexL10N.tags + " <i>" + term.tags + "</i></span> <span class=\"add\">" + factolexL10N.add + additional_text[j] + "</span><br/><span class=\"fact\">" + term.fact + "</span>")
+								.attr({"factolexid": term.id, "factolextitle": titles[j]})
+								.appendTo(choose_div)
+								.click(function() {
+									var term = factolex_terms[$(this).attr("factolexid")];
+									if (factolex_lexicon[term.id]) {
+										// alert("already in your lexicon");
+										return true;
+									}
+									var title = $(this).attr("factolextitle");
+									
+									$.ajax({
+										data: "action=factolex-add-term&term=" + term.id + "&post=" + $("#post_ID").val() + "&title=" + encodeURIComponent(title) + "&tags=" + encodeURIComponent(term.tags) + "&link=" + encodeURIComponent(term.link) + "&fact_id=" + encodeURIComponent(term.fact_id) + "&fact_title=" + encodeURIComponent(term.fact) + "&fact_type=" + encodeURIComponent(term.fact_type) + "&fact_source=" + encodeURIComponent(term.fact_source),
+										type: "POST",
+										url: "admin-ajax.php?action=factolex-add-term"
+									});
+									
+									factolex_lexicon[term.id] = term;
+									var li = $(document.createElement("li")).attr("factolexid", term.id).appendTo($("#factolex-terms-in-glossary"));
+									$(document.createElement("a")).text(title).addClass("term").attr({"href": term.link, "title": term.fact}).appendTo(li);
+									$(document.createTextNode(" ")).appendTo(li);
+									$(document.createElement("a")).text("Remove").addClass("remove").attr("href", "").appendTo(li).click(factolex_remove_term);
+									$(document.createElement("br")).appendTo(li);
+									$(document.createElement("span")).text(term.fact).addClass("fact").appendTo(li);
 								});
-								
-								factolex_lexicon[term.id] = term;
-								var li = $(document.createElement("li")).attr("factolexid", term.id).appendTo($("#factolex-terms-in-glossary"));
-								$(document.createElement("a")).text(term.title).addClass("term").attr({"href": term.link, "title": term.fact}).appendTo(li);
-								$(document.createTextNode(" ")).appendTo(li);
-								$(document.createElement("a")).text("Remove").addClass("remove").attr("href", "").appendTo(li).click(factolex_remove_term);
-								$(document.createElement("br")).appendTo(li);
-								$(document.createElement("span")).text(term.fact).addClass("fact").appendTo(li);
-							});
-						if (i == 0) {
-							d.addClass("first");
+							if (i == 0 && j == 0) {
+								d.addClass("first");
+							}
 						}
 					}
 					var p = $(this).position();

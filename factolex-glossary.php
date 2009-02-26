@@ -3,7 +3,7 @@
 Plugin Name: Factolex Glossary
 Plugin URI: http://www.factolex.com/support/wordpress/
 Description: Provides a glossary for your blog posts by using definitions from Factolex.com. Please deactivate and re-activate the plugin when upgrading.
-Version: 0.1
+Version: 0.2
 Author: Factolex.com
 Author URI: http://www.factolex.com/
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -32,10 +32,10 @@ class FactolexGlossary {
 	private $term_table, $terms_in_post_table, $fact_table, $plugin_url, $box_title, $defaults;
 	
 	private function version($what = false) {
-		if ($what === "db") return 1;
-		if ($what === "js") return 1;
+		if ($what === "db") return 2;
+		if ($what === "js") return 2;
 		if ($what === "css") return 1;
-		return 0.1;
+		return 0.2;
 	}
 	
 	public function __construct() {
@@ -116,9 +116,13 @@ class FactolexGlossary {
 		$subdomain = get_option("factolex_language");
 		if ($subdomain != "en" && $subdomain != "de") $subdomain = "www";
 		
-		$lexicon = '<div class="factolex-glossary"' . $style . '><div class="factolex-glossary-header"><a href="http://' . $subdomain . '.factolex.com/">' . htmlspecialchars($atts["title"]) . '</a></div><div class="factolex-glossary-content">';
+		$lexicon = '<div class="factolex-glossary"' . $style . '><div class="factolex-glossary-header"><a href="http://' . $subdomain . '.factolex.com/';
+		$username = get_option("factolex_username");
+		if ($username) $lexicon .= "user/" . htmlspecialchars($username) . "/lexicon";
+		$lexicon .= '">' . htmlspecialchars($atts["title"]) . '</a></div><div class="factolex-glossary-content">';
 		$t = "";
 		$last_id = false;
+		$username = get_option("factolex_username");
 		foreach ($this->getTermsForPost(get_the_id()) as $term) {
 			if ($last_id !== $term->id) {
 				$lexicon .= $t . "<h2><a href=\"" . htmlspecialchars(stripslashes($term->link)) . "\">" . htmlspecialchars(stripslashes($term->title)) . "</a></h2><ul>";
@@ -158,7 +162,7 @@ class FactolexGlossary {
 		if (isset($_POST["title"])) {
 			$sql = "INSERT INTO `" . $this->term_table . "` (`id`, `title`, `link`, `tags`, `creationDate`) VALUES ('" . $wpdb->escape($_POST["term"]) . "', '" . $wpdb->escape($_POST["title"]) . "', '" . $wpdb->escape($_POST["link"]) . "', '" . $wpdb->escape($_POST["tags"]) . "', '" . $wpdb->escape($now) . "') ON DUPLICATE KEY UPDATE `title` = VALUES(`title`), `link` = VALUES(`link`), `tags` = VALUES(`tags`)";
 			$results = $wpdb->query( $sql );
-			$sql = "INSERT INTO `" . $this->fact_table . "` (`id`, `termId`, `title`, `type`, `source`, `creationDate`) VALUES ('" . $wpdb->escape($_POST["fact_id"]) . "', '" . $wpdb->escape($_POST["term"]) . "', '" . $wpdb->escape($_POST["fact_title"]) . "', '" . $wpdb->escape($_POST["fact_type"]) . "', '" . $wpdb->escape($_POST["fact_source"]) . "', '" . $wpdb->escape($now) . "') ON DUPLICATE KEY UPDATE `title` = VALUES(`title`), `type` = VALUES(`type`), `source` = VALUES(`source`)";
+			$sql = "INSERT INTO `" . $this->fact_table . "` (`id`, `termId`, `username`, `title`, `type`, `position`, `source`, `creationDate`) VALUES ('" . $wpdb->escape($_POST["fact_id"]) . "', '" . $wpdb->escape($_POST["term"]) . "', NULL, '" . $wpdb->escape($_POST["fact_title"]) . "', '" . $wpdb->escape($_POST["fact_type"]) . "', '100', '" . $wpdb->escape($_POST["fact_source"]) . "', '" . $wpdb->escape($now) . "') ON DUPLICATE KEY UPDATE `username` = VALUES(`username`), `title` = VALUES(`title`), `type` = VALUES(`type`), `position` = VALUES(`position`), `source` = VALUES(`source`)";
 			$results = $wpdb->query( $sql );
 		}
 	}
@@ -216,6 +220,11 @@ class FactolexGlossary {
 				$json .= $tt . "{";
 				$t = "";
 				foreach ($term_fields as $field) {
+					$json .= $t . '"' . $field . '":"' . $this->json_slashes($term[$field]) . '"';
+					$t = ",";
+				}
+				$field = "synonym_for";
+				if (isset($term[$field])) {
 					$json .= $t . '"' . $field . '":"' . $this->json_slashes($term[$field]) . '"';
 					$t = ",";
 				}
@@ -279,7 +288,7 @@ class FactolexGlossary {
 			$t = "', '";
 		}
 		
-		$facts = $wpdb->get_results("SELECT `f`.* FROM `" . $this->fact_table . "` `f` WHERE `f`.`termId` IN ('" . $term_ids . "') AND `f`.`position` < 100 ORDER BY `f`.`position` ASC");
+		$facts = $wpdb->get_results("SELECT `f`.* FROM `" . $this->fact_table . "` `f` WHERE `f`.`termId` IN ('" . $term_ids . "') AND `f`.`username` = '" . $wpdb->escape(get_option("factolex_username")) . "' AND `f`.`position` < 100 ORDER BY `f`.`position` ASC");
 		
 		$ret = array();
 		foreach ($facts as $fact) {
@@ -301,6 +310,10 @@ class FactolexGlossary {
 		if (!$username) return false;
 		
 		$l = $this->queryApi("lexicon", array("user" => $username, "factids" => 1));
+		if (isset($l["error"])) {
+			update_option("factolex_username", "");
+			return false;
+		}
 		$now = date("Y-m-d H:i:s");
 		
 		global $wpdb;
@@ -308,16 +321,16 @@ class FactolexGlossary {
 			$sql = "INSERT INTO `" . $this->term_table . "` (`id`, `title`, `link`, `tags`, `creationDate`) VALUES ('" . $wpdb->escape($term["id"]) . "', '" . $wpdb->escape($term["title"]) . "', '" . $wpdb->escape($term["link"]) . "', '" . $wpdb->escape($term["tags"]) . "', '" . $wpdb->escape($now) . "') ON DUPLICATE KEY UPDATE `title` = VALUES(`title`), `link` = VALUES(`link`), `tags` = VALUES(`tags`)";
 			$results = $wpdb->query( $sql );
 			
-			$sql = "INSERT INTO `" . $this->fact_table . "` (`id`, `termId`, `position`, `title`, `type`, `source`, `creationDate`) VALUES (";
+			$sql = "INSERT INTO `" . $this->fact_table . "` (`id`, `termId`, `username`, `position`, `title`, `type`, `source`, `creationDate`) VALUES (";
 			
 			$c = 1; $t = "";
 			foreach ($term["facts"] as $fact) {
-				$sql .= $t . "'" . $wpdb->escape($fact["id"]) . "', '" . $wpdb->escape($term["id"]) . "', '" . $wpdb->escape($c) . "', '" . $wpdb->escape($fact["title"]) . "', '" . $wpdb->escape($fact["type"]) . "', '" . $wpdb->escape($fact["source"]) . "', '" . $wpdb->escape($now) . "'";
+				$sql .= $t . "'" . $wpdb->escape($fact["id"]) . "', '" . $wpdb->escape($term["id"]) . "', '" . $wpdb->escape($username) . "', '" . $wpdb->escape($c) . "', '" . $wpdb->escape($fact["title"]) . "', '" . $wpdb->escape($fact["type"]) . "', '" . $wpdb->escape($fact["source"]) . "', '" . $wpdb->escape($now) . "'";
 				$t = "), (";
 				$c += 1;
 			}
 			if ($t == "") continue; // no facts? -> don't insert
-			$sql .= ") ON DUPLICATE KEY UPDATE `title` = VALUES(`title`), `position` = VALUES(`position`), `type` = VALUES(`type`), `source` = VALUES(`source`)";
+			$sql .= ") ON DUPLICATE KEY UPDATE `username` = VALUES(`username`), `title` = VALUES(`title`), `position` = VALUES(`position`), `type` = VALUES(`type`), `source` = VALUES(`source`)";
 			$results = $wpdb->query( $sql );
 		}
 	}
@@ -339,7 +352,7 @@ class FactolexGlossary {
 	
 	public function getTermsForPost($id) {
 		global $wpdb;
-		$terms = $wpdb->get_results("SELECT `t`.`id`, `t`.`title`, `t`.`link`, `f`.`title` AS `fact`, `f`.`type` AS `fact_type`, `f`.`source` AS `fact_source`, `f`.`position` AS `fact_position` FROM `" . $this->terms_in_post_table . "` `tp` LEFT JOIN `" . $this->term_table . "` `t` ON `t`.`id` = `tp`.`termId` LEFT JOIN `" . $this->fact_table . "` `f` ON `t`.`id` = `f`.`termId` WHERE `tp`.`postId` = '" . $wpdb->escape($id) . "' ORDER BY `t`.`title` ASC, `f`.`position` ASC");
+		$terms = $wpdb->get_results("SELECT `t`.`id`, `t`.`title`, `t`.`link`, `f`.`title` AS `fact`, `f`.`type` AS `fact_type`, `f`.`source` AS `fact_source`, `f`.`username`, `f`.`position` AS `fact_position` FROM `" . $this->terms_in_post_table . "` `tp` LEFT JOIN `" . $this->term_table . "` `t` ON `t`.`id` = `tp`.`termId` LEFT JOIN `" . $this->fact_table . "` `f` ON `t`.`id` = `f`.`termId` WHERE `tp`.`postId` = '" . $wpdb->escape($id) . "' AND (`f`.`username` IS NULL OR `f`.`username` = '" . $wpdb->escape(get_option("factolex_username")) . "') ORDER BY `t`.`title` ASC, `f`.`position` ASC");
 		return $terms;
 	}
 	
@@ -378,7 +391,7 @@ class FactolexGlossary {
 	<table class="form-table">
 	<tr valign="top">
 		<th scope="row"><label for="factolex_border_color"><?php _e("Border Color", "factolex-glossary"); ?></label></th>
-		<td><input name="factolex_border_color" type="text" id="factolex_border_color" size="8" value="<?php echo get_option('factolex_border_color'); ?>" /> <?php echo str_replace(array("%w3", "%default"), array('"http://www.w3schools.com/css/css_colors.asp"', "<i>" . $this->defaults["border_olor"] . "</i>"), __("Format: <a href=%w3>CSS Colors</a>, default: %default", "factolex-glossary")); ?></td>
+		<td><input name="factolex_border_color" type="text" id="factolex_border_color" size="8" value="<?php echo get_option('factolex_border_color'); ?>" /> <?php echo str_replace(array("%w3", "%default"), array('"http://www.w3schools.com/css/css_colors.asp"', "<i>" . $this->defaults["border_color"] . "</i>"), __("Format: <a href=%w3>CSS Colors</a>, default: %default", "factolex-glossary")); ?></td>
 	</tr>
 	<tr valign="top">
 		<th scope="row"><label for="factolex_header_bg_color"><?php _e("Header Background Color", "factolex-glossary"); ?></label></th>
@@ -448,6 +461,8 @@ class FactolexGlossary {
 			"explanation" => __("Click the terms that you want to enlist in your glossary and select the meaning by clicking on it. The term will appear in the box on the right. <a href=%close>Close this</a> when you are finished.", "factolex-glossary"),
 			"add" => __("Add", "factolex-glossary"),
 			"tags" => __("Tags:", "factolex-glossary"),
+			"alternateSpelling" => __("alternate spelling", "factolex-glossary"),
+			"originalSpelling" => __("main term spelling", "factolex-glossary"),
 		));
 		
     	?><style type="text/css">
@@ -571,6 +586,7 @@ class FactolexGlossary {
 			CREATE TABLE `" . $this->fact_table . "` (
 			  `id` char(6) character set ascii collate ascii_bin NOT NULL,
 			  `termId` char(8) character set ascii collate ascii_bin NOT NULL,
+			  `username` char(8) character set ascii,
 			  `position` tinyint(4) NOT NULL DEFAULT '100',
 			  `title` tinytext character set utf8 collate utf8_general_ci NOT NULL,
 			  `type` enum('fact','link','picture','coords') character set ascii collate ascii_bin NOT NULL,
@@ -607,7 +623,7 @@ $factolex = new FactolexGlossary;
 $factolex_pluginname = plugin_basename(__FILE__); 
 
 $plugin_dir = basename(dirname(__FILE__));
-load_plugin_textdomain( "factolex-glossary", "wp-content/plugins/" . $plugin_dir, $plugin_dir );
+load_plugin_textdomain( "factolex-glossary", "wp-content/plugins/" . $plugin_dir . "/lang", $plugin_dir . "/lang" );
 
 register_activation_hook($factolex_pluginname, array($factolex, "setup"));
 register_deactivation_hook($factolex_pluginname, array($factolex, "deactivate"));

@@ -4,13 +4,13 @@ Donate link: http://www.factolex.com/
 Tags: glossary, post, factolex
 Requires at least: 2.5
 Tested up to: 2.7.1
-Stable tag: trunk
+Stable tag: 0.2
 
 Allows you to add glossaries to your blog posts using definitions from Factolex.com
 
 == Description ==
 
-Factolex.com is a fact lexicon. We split up knowledge into small sentences: facts
+[Factolex.com](http://www.factolex.com/) is a fact lexicon. We split up knowledge into small sentences: facts
 
 You can use the data from Factolex to describe terms you are using in your blog posts or blog pages, and then place the glossary anywhere in your post using the shortcode `[factolex]`.
 
@@ -19,6 +19,9 @@ Selecting terms for a post is easy: just click a button in the sidebar box and t
 *Using the Factolex Glossary plugin does not require an account at Factolex.com*
 
 All the selected terms and explanations are stored in your WordPress database, so after selecting the terms from Factolex you are not dependent on it.
+
+[Changelog](http://www.factolex.com/support/wordpress/#changelog)
+[Larger Screenshots](http://www.factolex.com/support/wordpress/#screenshots)
 
 == Installation ==
 

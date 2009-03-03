@@ -1,6 +1,5 @@
 === Factolex Glossary ===
 Contributors: akirk
-Donate link: http://www.factolex.com/
 Tags: glossary, post, factolex
 Requires at least: 2.5
 Tested up to: 2.7.1

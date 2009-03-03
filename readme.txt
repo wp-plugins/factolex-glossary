@@ -20,8 +20,10 @@ Selecting terms for a post is easy: just click a button in the sidebar box and t
 
 All the selected terms and explanations are stored in your WordPress database, so after selecting the terms from Factolex you are not dependent on it.
 
-[Changelog](http://www.factolex.com/support/wordpress/#changelog)
-[Larger Screenshots](http://www.factolex.com/support/wordpress/#screenshots)
+Further Resources:
+1. [Changelog](http://www.factolex.com/support/wordpress/#changelog)
+2. [Screencast](http://www.factolex.com/support/wordpress/#screencast)
+3. [Larger Screenshots](http://www.factolex.com/support/wordpress/#screenshots)
 
 == Installation ==
 

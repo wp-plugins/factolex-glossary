@@ -21,7 +21,7 @@ All the selected terms and explanations are stored in your WordPress database, s
 
 Further Resources:
 1. [Changelog](http://www.factolex.com/support/wordpress/#changelog)
-2. [Screencast](http://www.factolex.com/support/wordpress/#screencast)
+2. [Screencast](http://vimeo.com/3454158)
 3. [Larger Screenshots](http://www.factolex.com/support/wordpress/#screenshots)
 
 == Installation ==
